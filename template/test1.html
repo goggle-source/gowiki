@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{.Title}}</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 700px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: #222; }
+        .meta { color: #777; font-size: 0.9em; margin-bottom: 20px; }
+        .content { line-height: 1.6; }
+        hr { border: 0; border-top: 1px solid #eee; margin: 30px 0; }
+    </style>
+</head>
+<body>
+    <h1>{{.Title}}</h1>
+    <div class="meta">
+        Автор: {{.Author.Name}} | 
+        Опубликовано: {{.CreatedAt.Format "02.01.2006"}}
+    </div>
+    <div class="content">
+        {{.Content}}
+    </div>
+    <hr>
+    <p><a href="/">← Назад к списку</a></p>
+</body>
+</html>
