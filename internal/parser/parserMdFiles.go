@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"bufio"
 	"bytes"
 	"io/fs"
 	"os"
@@ -21,18 +22,45 @@ func GetHTMLContent(pathDirContent string) ([]HTMLReadyMarkDownFile, error) {
 	}
 	result := make([]HTMLReadyMarkDownFile, 1)
 	for _, path := range pathFiles {
-		data, err := os.ReadFile(path)
+		file, err := os.Open(path)
 		if err != nil {
+			file.Close()
 			continue
 		}
-		var byte bytes.Buffer
+		scanner := bufio.NewScanner(file)
+		count := 0
+		flagIsReadOneStr := true
+		data := make([]byte, 0)
+		for scanner.Scan() {
+			text := scanner.Text()
+			if flagIsReadOneStr && text != "---" {
+				data = append(data, scanner.Bytes()...)
+				data = append(data, '\n')
+			}
+			if text == "---" {
+				count += 1
+				flagIsReadOneStr = false
+				continue
+			}
+			if count >= 2 {
+				data = append(data, scanner.Bytes()...)
+				data = append(data, '\n')
+			}
+		}
 
-		if err := goldmark.Convert(data, &byte); err != nil {
-			continue
+		if scanner.Err() != nil {
+			file.Close()
+			return []HTMLReadyMarkDownFile{}, scanner.Err()
 		}
+		file.Close()
+		var bufes bytes.Buffer
+		if err := goldmark.Convert(data, &bufes); err != nil {
+			return []HTMLReadyMarkDownFile{}, err
+		}
+
 		result = append(result, HTMLReadyMarkDownFile{
-			Data: byte,
 			Path: path,
+			Data: bufes,
 		})
 	}
 

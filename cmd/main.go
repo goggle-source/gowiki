@@ -19,6 +19,15 @@ func main() {
 	for _, value := range res {
 		fmt.Println(value.Data.String())
 		fmt.Println(value.Path)
+		maps, err := parser.GetMetadataMdFile(value.Path)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		for key, value := range maps {
+			fmt.Println("key", key)
+			fmt.Println("value", value)
+		}
 	}
 
 	g := parser.Init(cfg.PathTemplateHTML)
