@@ -20,7 +20,7 @@ func GetHTMLContent(pathDirContent string) ([]HTMLReadyMarkDownFile, error) {
 	if err != nil {
 		return []HTMLReadyMarkDownFile{}, err
 	}
-	result := make([]HTMLReadyMarkDownFile, 1)
+	result := make([]HTMLReadyMarkDownFile, 0)
 	for _, path := range pathFiles {
 		file, err := os.Open(path)
 		if err != nil {

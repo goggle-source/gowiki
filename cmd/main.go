@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/goggle-source/gowiki/internal/config"
+	"github.com/goggle-source/gowiki/internal/generator"
 	"github.com/goggle-source/gowiki/internal/parser"
 )
 
@@ -30,14 +30,10 @@ func main() {
 		}
 	}
 
-	g := parser.Init(cfg.PathTemplateHTML)
+	fmt.Println(res)
 
-	temp := g.GetTemplate("test1.html")
+	err = generator.GenerateReadyHTML(cfg.PathMdFile, cfg.PathTemplateHTML, cfg.PathForReadyHTML)
 
-	file, err := os.OpenFile("test2.html", os.O_CREATE|os.O_RDWR, 0777)
-	if err != nil {
-		panic(err)
-	}
+	fmt.Println(err)
 
-	temp.Execute(file, 0)
 }

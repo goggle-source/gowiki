@@ -27,7 +27,8 @@ func GetMetadataMdFile(pathForFile string) (map[string]any, error) {
 		}
 		if count_str >= 1 && count_str < 2 {
 			strs := strings.Split(text, ":")
-			result[strs[0]] = strs[1]
+			resStrs := strings.TrimSpace(strs[1])
+			result[strs[0]] = resStrs
 		}
 	}
 	if scanner.Err() != nil {

@@ -14,13 +14,13 @@
 <body>
     <h1>{{.Title}}</h1>
     <div class="meta">
-        Автор: {{.Author.Name}} | 
-        Опубликовано: {{.CreatedAt.Format "02.01.2006"}}
+        Автор: {{.Name}} 
+        Email: {{.Email}}
+        Опубликовано: {{.CreatedAt}}
     </div>
     <div class="content">
         {{.Content}}
     </div>
     <hr>
-    <p><a href="/">← Назад к списку</a></p>
 </body>
 </html>

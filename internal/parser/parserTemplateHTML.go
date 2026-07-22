@@ -2,6 +2,7 @@ package parser
 
 import (
 	"html/template"
+	"path/filepath"
 )
 
 type GlobalTemplate struct {
@@ -11,20 +12,19 @@ type GlobalTemplate struct {
 func Init(pathDirTemplates string) *GlobalTemplate {
 
 	g := GlobalTemplate{
-		Templates: nil,
+		Templates: loadTemplates(pathDirTemplates),
 	}
-	g.loadTemplates(pathDirTemplates)
 
 	return &g
 }
 
-func (g *GlobalTemplate) loadTemplates(pathDirTemplates string) error {
-	templates, err := template.ParseGlob(pathDirTemplates + "/" + "*.html")
+func loadTemplates(pathDirTemplates string) *template.Template {
+	pattern := filepath.Join(pathDirTemplates, "*.html")
+	templates, err := template.ParseGlob(pattern)
 	if err != nil {
-		return err
+		panic(err)
 	}
-	g.Templates = templates
-	return nil
+	return templates
 }
 
 func (g *GlobalTemplate) GetTemplate(nameTemplate string) *template.Template {
