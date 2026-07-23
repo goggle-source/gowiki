@@ -22,7 +22,7 @@ func loadTemplates(pathDirTemplates string) *template.Template {
 	pattern := filepath.Join(pathDirTemplates, "*.html")
 	templates, err := template.ParseGlob(pattern)
 	if err != nil {
-		panic(err)
+		return nil
 	}
 	return templates
 }

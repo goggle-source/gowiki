@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"html/template"
 	"io"
+	"log/slog"
 	"os"
 	"path/filepath"
 
@@ -12,7 +13,7 @@ import (
 	"github.com/goggle-source/gowiki/internal/parser"
 )
 
-func GenerateReadyHTML(pathDirContent, pathDirTemplates, pathDirForReadyHTML string) error {
+func GenerateReadyHTML(pathDirContent, pathDirTemplates, pathDirForReadyHTML string, log *slog.Logger) error {
 	mdFiles, err := parser.GetHTMLContent(pathDirContent)
 	if err != nil {
 		return err
@@ -21,7 +22,16 @@ func GenerateReadyHTML(pathDirContent, pathDirTemplates, pathDirForReadyHTML str
 	for _, file := range mdFiles {
 		metadata, err := parser.GetMetadataMdFile(file.Path)
 		if err != nil {
-			panic(fmt.Errorf("%s:%w", "getmetadata", err))
+			log.Info("err get metadataMdFile", slog.Any("err", err))
+			continue
+		}
+		if metadata["name_template"].(string) == "" {
+			log.Info("name_template is not found")
+			continue
+		}
+		if metadata["name_ready_html"].(string) == "" {
+			log.Info("name_ready_html is not found")
+			continue
 		}
 		ServicTemplate := parser.Init(pathDirTemplates)
 		template := ServicTemplate.GetTemplate(metadata["name_template"].(string))
