@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"net/http"
 	"path/filepath"
 	"strings"
@@ -16,7 +15,6 @@ func fileHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "missing filename", http.StatusBadRequest)
 		return
 	}
-	fmt.Println(filename)
 
 	cleanName := filepath.Clean(filename)
 
@@ -28,6 +26,5 @@ func fileHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println(fullPath)
 	http.ServeFile(w, r, fullPath)
 }
