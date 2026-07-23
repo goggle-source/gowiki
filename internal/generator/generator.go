@@ -30,7 +30,7 @@ func GenerateReadyHTML(pathDirContent, pathDirTemplates, pathDirForReadyHTML str
 		if err != nil {
 			panic(fmt.Errorf("%s:%w", "openfile", err))
 		}
-		fmt.Println(metadata["name_template"].(string))
+
 		if metadata["name_template"].(string) == "test1.html" {
 			err := genereteHTMLTest1(template, file.Data, metadata, fileForReadyHTML)
 			if err != nil {
