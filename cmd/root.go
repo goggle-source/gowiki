@@ -47,4 +47,5 @@ func init() {
 	rootCmd.AddCommand(commands.InitBuild())
 	rootCmd.AddCommand(commands.InitServe())
 	rootCmd.AddCommand(commands.InitNew())
+	rootCmd.AddCommand(commands.InitCreateEnv())
 }

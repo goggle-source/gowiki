@@ -33,6 +33,7 @@ func GenerateReadyHTML(pathDirContent, pathDirTemplates, pathDirForReadyHTML str
 			log.Info("name_ready_html is not found")
 			continue
 		}
+
 		ServicTemplate := parser.Init(pathDirTemplates)
 		template := ServicTemplate.GetTemplate(metadata["name_template"].(string))
 		path := filepath.Join(pathDirForReadyHTML, metadata["name_ready_html"].(string))
