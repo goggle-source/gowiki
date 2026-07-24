@@ -71,7 +71,7 @@ func GetMarkDownFiles(pathDirContent string) ([]string, error) {
 	var files []string
 	err := filepath.WalkDir(pathDirContent, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
-			return nil
+			return err
 		}
 		if !d.IsDir() && filepath.Ext(d.Name()) == ".md" {
 			files = append(files, path)

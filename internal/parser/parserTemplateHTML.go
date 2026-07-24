@@ -22,13 +22,15 @@ func loadTemplates(pathDirTemplates string) *template.Template {
 	pattern := filepath.Join(pathDirTemplates, "*.html")
 	templates, err := template.ParseGlob(pattern)
 	if err != nil {
-		return nil
+		panic(err)
 	}
 	return templates
 }
 
 func (g *GlobalTemplate) GetTemplate(nameTemplate string) *template.Template {
-	result := g.Templates.Lookup(nameTemplate)
-
-	return result
+	if g.Templates != nil {
+		result := g.Templates.Lookup(nameTemplate)
+		return result
+	}
+	return nil
 }

@@ -35,6 +35,10 @@ func GenerateReadyHTML(pathDirContent, pathDirTemplates, pathDirForReadyHTML str
 		}
 
 		ServicTemplate := parser.Init(pathDirTemplates)
+		if ServicTemplate.Templates == nil {
+			log.Error("err init ServicTemplate")
+			return fmt.Errorf("app error")
+		}
 		template := ServicTemplate.GetTemplate(metadata["name_template"].(string))
 		path := filepath.Join(pathDirForReadyHTML, metadata["name_ready_html"].(string))
 		fileForReadyHTML, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0773)
