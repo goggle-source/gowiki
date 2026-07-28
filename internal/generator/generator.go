@@ -9,7 +9,6 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/goggle-source/gowiki/internal/models"
 	"github.com/goggle-source/gowiki/internal/parser"
 )
 
@@ -43,7 +42,7 @@ func GenerateReadyHTML(pathDirContent, pathDirTemplates, pathDirForReadyHTML str
 		path := filepath.Join(pathDirForReadyHTML, metadata["name_ready_html"].(string))
 		fileForReadyHTML, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0773)
 		if err != nil {
-			panic(fmt.Errorf("%s:%w", "openfile", err))
+			panic(fmt.Errorf("%s:%w", "err openfile", err))
 		}
 
 		if metadata["name_template"].(string) == "test1.html" {
@@ -60,15 +59,16 @@ func GenerateReadyHTML(pathDirContent, pathDirTemplates, pathDirForReadyHTML str
 
 func genereteHTMLTest1(templateHTML *template.Template, data bytes.Buffer, metadata map[string]any, w io.Writer) error {
 
-	model := models.Test1{
-		Name:      template.HTML(metadata["Name"].(string)),
-		Title:     template.HTML(metadata["Title"].(string)),
-		Email:     template.HTML(metadata["Email"].(string)),
-		Content:   template.HTML(data.String()),
-		CreatedAt: template.HTML(metadata["CreatedAt"].(string)),
+	metadata["Content"] = template.HTML(data.String())
+
+	for key, value := range metadata {
+		if _, ok := value.(string); !ok {
+			continue
+		}
+		metadata[key] = template.HTML(value.(string))
 	}
 
-	err := templateHTML.Execute(w, model)
+	err := templateHTML.Execute(w, metadata)
 	if err != nil {
 		return err
 	}
