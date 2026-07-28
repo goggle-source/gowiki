@@ -112,13 +112,11 @@ The hidden go version 1.26.4
     <hr>
 </body>
 </html>
-
     ```
 
-    example md file for this template: 
+example md file for this template: 
 
     ```md 
-    
     ---
     Title: blog for golang
     Name: goggle
@@ -129,7 +127,6 @@ The hidden go version 1.26.4
     ---
 
     this test md file for example
-
     ```
 
 3. md files should be located in the folder specified in the config as path_for_md_file, and templates should be located in path_for_template_html.
