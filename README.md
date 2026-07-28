@@ -5,12 +5,15 @@
 
 ## Quick start
 
-1. clone repository - `git clone <url project>`
+1. clone repository:
+   `git clone <url project>`
 
-2. installing dependencies from the project root - `go mod tidy`
+2. installing dependencies from the project root:
+   `go mod tidy`
 
 3. You need to define config.yml in the project root.
 **example** config.yml:
+
 ```yml
 {
     path_for_md_file: "./content",
@@ -20,11 +23,14 @@
 }
 ```
 
-4. run the create_env command from the project root - `go run cmd/cli/main.go build create_env`
+4. run the create_env command from the project root:
+   `go run cmd/cli/main.go build create_env`
 
-5. run the build command from the project root - `go run cmd/cli/main.go build`
+5. run the build command from the project root: 
+   `go run cmd/cli/main.go build`
 
-6. run the serve commandfrom the project root(The http server will be started on localhost on the port specified in the config) - `go run cmd/cli/main.go serve` 
+6. run the serve commandfrom the project root(The http server will be started on localhost on the port specified in the config):
+   `go run cmd/cli/main.go serve` 
 
 
 ## Description Commands
@@ -53,6 +59,19 @@ This command creates folders for md files, templates, and ready-made html pages 
 **example**
 `go run cmd/cli/main.go create_env`
 
+### new
+
+**description**
+This command copies the specified file to the folder specified in **config.yml**. Copies only files with the .md and .html extension
+
+**example**
+
+example for md file:
+`go run cmd/cli/main.go new --path./dir_file/name_file.md`
+
+example for html file:
+`go run cmd/cli/main.go new --path./dir_file/name_file.html`
+
 ## Requirements
 
 The hidden go version 1.26.4
@@ -62,7 +81,7 @@ The hidden go version 1.26.4
     **name_template** - the name of the template with the extension
     **name_ready_html** - the name of the ready html page
 
-2. If there are other parameters in the template besides Content, they should be included in the md file's metadata. All other data that is not in the metadata will be added to the Content
+2. If there are other parameters in the template besides Content, they should be included in the md file's metadata. All other data that is not in the metadata will be added to the *.Content*
 
     example template:
 
@@ -112,4 +131,4 @@ The hidden go version 1.26.4
 
 3. md files should be located in the folder specified in the config as path_for_md_file, and templates should be located in path_for_template_html.
 
-**WARMING**: Currently, you cannot add new templates to this project using the command. Only 1 template is available.
+4. the template must contain a field *.Content*

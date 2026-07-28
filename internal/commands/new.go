@@ -32,6 +32,9 @@ func InitNew() *cobra.Command {
 			if expansion == ".html" {
 				baseDir = config.MustLoad().PathTemplateHTML
 			}
+			if baseDir == "" {
+				return fmt.Errorf("incorrect file extension: either .md or .html")
+			}
 			file, err := os.Open(path)
 			if err != nil {
 				return err
